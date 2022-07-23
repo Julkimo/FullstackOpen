@@ -16,14 +16,14 @@
       "id": 5
     },
     {
-      "name": "Kalle Duck",
-      "number": "044 222 3456",
-      "id": 6
-    },
-    {
       "name": "Aada Lavleis",
       "number": "123 3332222",
       "id": 7
+    },
+    {
+      "name": "Salla Isuus",
+      "number": "xxx xxxxxxx",
+      "id": 10
     }
   ]
 }

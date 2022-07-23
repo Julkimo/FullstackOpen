@@ -1,0 +1,15 @@
+.notification {
+    color: rgb(129, 118, 231);
+    background: rgb(248, 186, 238);
+    font-size: 16px;
+    border-style: dotted;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.name {
+    color:rgb(22, 4, 43);
+    background: rgb(253, 220, 239);
+    font-size: 24px;
+}

@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='notification'>
+      {message}
+    </div>
+  )
+}
+
 const Filter = ( {filterText, handleFiltering} ) => {
   return (
     <form>
@@ -41,7 +53,7 @@ const PersonForm = ( { addName, newName, handleNameChange, newNumber, handleNumb
 const Persons = ( {personsToShow, deletePerson} ) => {
   return (
     personsToShow.map(person =>
-      <p key={person.id}> {person.name} {person.number} <button onClick={() => deletePerson(person.id)}> delete </button> </p>
+      <p className='name' key={person.id}> {person.name} {person.number} <button onClick={() => deletePerson(person.id)}> delete </button> </p>
     )
   )
 }
@@ -49,7 +61,7 @@ const Persons = ( {personsToShow, deletePerson} ) => {
 const App = () => {
 
   const [persons, setPersons] = useState([ ])
-
+  const [notification, setNotification] = useState(null)
   useEffect(() => {
     personService
       .getAll()
@@ -57,7 +69,6 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-
   const [newNumber, setNewNumber] = useState('')
   const isInPhonebook = (person) => {
     return person.name === newName
@@ -93,7 +104,12 @@ const App = () => {
     }
     if (persons.find(isInPhonebook))
     {
-      alert(`${newName} is already added to phonebook`)
+      setNotification(
+        `'${nameObject.name}' is already in the phonebook`
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 3000)
     }
     else
     {
@@ -101,7 +117,14 @@ const App = () => {
         .create(nameObject)
           .then(returnedName => {
           setPersons(persons.concat(returnedName))
-    })
+
+        setNotification(
+          `'${nameObject.name}' was added`
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 3000)
+      })
     }
     setNewName('')
     setNewNumber('')
@@ -117,6 +140,13 @@ const App = () => {
       personService
         .remove(id)
         .then(setPersons(persons.filter(n => n.id !== id)))
+
+        setNotification(
+          `'${person.name}' was deleted`
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 3000)
     }
   }
 
@@ -137,6 +167,7 @@ const App = () => {
       />
       <h2>Phone Numbers</h2>
       <Persons personsToShow={personsToShow} deletePerson={deletePerson}/>
+      <Notification message={notification} />
     </div>
   )
 }
