@@ -116,7 +116,7 @@ const App = () => {
       personService
         .create(nameObject)
           .then(returnedName => {
-          setPersons(persons.concat(returnedName))
+            setPersons(persons.concat(returnedName))
 
         setNotification(
           `'${nameObject.name}' was added`
@@ -124,6 +124,12 @@ const App = () => {
         setTimeout(() => {
           setNotification(null)
         }, 3000)
+      })
+        .catch(error => {
+          setNotification(error.response.data.error)
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
       })
     }
     setNewName('')
