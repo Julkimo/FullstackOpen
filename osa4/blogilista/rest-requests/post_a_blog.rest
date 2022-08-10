@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Miksi kalat eivät huuda?",
+  "author": "Kalle Kalander",
+  "url": "www.kallen_aatteet.org",
+  "likes": 800
+}
