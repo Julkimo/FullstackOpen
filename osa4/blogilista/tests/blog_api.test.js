@@ -27,17 +27,95 @@ beforeEach(async () => {
   await blogObject.save()
 })
 
-test('blogs are returned as json', async () => {
-  await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+describe('GET return the right amount of blogs as json', () => {
+
+  test('blogs are returned as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('there are two blogs', async () => {
+      const response = await api.get('/api/blogs')
+    
+      expect(response.body).toHaveLength(initialBlogs.length)
+  })
 })
 
-test('there are two blogs', async () => {
-    const response = await api.get('/api/blogs')
+//--------------------------------------------------------------------------
+
+describe('POST functions correctly', () => {
+
+  const postObject = new Blog(
+    {
+      title: 'Postataan',
+      author: 'Pos Taa',
+      url: 'www.posti.fi',
+      likes: 123
+    }
+  )
+
+  const postObjectNullLikes = new Blog(
+    {
+      title: 'Postataan',
+      author: 'Pos Taa',
+      url: 'www.posti.fi'
+    }
+  )
   
-    expect(response.body).toHaveLength(initialBlogs.length)
+  const postObjectNoTitle = new Blog(
+    {
+      author: 'Pos Taa',
+      url: 'www.posti.fi',
+      likes: 123
+    }
+  )
+
+  const postObjectNoUrl = new Blog(
+    {
+      title: 'Postataan',
+      author: 'Pos Taa',
+      likes: 123
+    }
+  )
+
+  test('Posting a blog increases the amount of blogs by one', async () => {
+    let response = await api.get('/api/blogs')
+    blogsBeforePost = response.body.length
+
+    await api
+      .post('/api/blogs')
+      .send(postObject)
+      .expect(201)
+      
+    response = await api.get('/api/blogs')
+    blogsAfterPost = response.body.length
+
+    expect(blogsAfterPost - 1 == blogsBeforePost)
+  })
+
+  test('null likes equals 0 likes', async () => {
+    await api
+      .post('/api/blogs')
+      .send(postObjectNullLikes)
+      
+    const response = await api.get('/api/blogs')
+
+    expect(response.body[2].likes).toBe(0)
+  })
+
+  test('No title or url leads to 400 Bad Request', async () => {
+    await api
+      .post('/api/blogs')
+      .send(postObjectNoTitle)
+      .expect(400)
+
+    await api
+      .post('/api/blogs')
+      .send(postObjectNoUrl)
+      .expect(400)
+  })
 })
 
 afterAll(() => {
