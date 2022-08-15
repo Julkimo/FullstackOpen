@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Elin koko päivän kirjaimellisesti sydämettömänä...",
-  "author": "Hertta Hurtta",
-  "url": "www.viimeisetsanat.fi",
-  "likes": 276
+  "title": "Mikä kala olet sielultasi?",
+  "author": "Uppe Luksissa",
+  "url": "www.pulipuli.fi",
+  "likes": 113
 }
