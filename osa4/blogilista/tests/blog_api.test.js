@@ -118,6 +118,23 @@ describe('POST functions correctly', () => {
   })
 })
 
+describe('DELETE functions correctly', () => {
+  test('deleting the first blog on the list', async () =>{
+    let blogs = await Blog.find({})
+    const id = blogs[0]._id.toString()
+    
+    await api
+      .delete('/api/blogs/' + id)
+      .expect(204)
+
+      blogs = await Blog.find({})
+      amountAfter = blogs.length
+
+    expect(initialBlogs.length - amountAfter).toBe(1)
+  })
+})
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
