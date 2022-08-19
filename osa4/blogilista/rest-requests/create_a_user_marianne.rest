@@ -1,0 +1,12 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "blogs": [
+    "62fcc2d984da00a6d35c0962",
+    "62fcc3a6bef9b15c992d9fd8"
+  ],
+  "username": "Ansku",
+  "name": "Anna-Mari-Kaisa-Liina Ylä-Pihtilä-Paananen",
+  "password": "salainensana007"
+}
