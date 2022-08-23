@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import NewBlogForm from './components/NewBlogForm'
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -49,14 +51,12 @@ const App = () => {
       setTimeout(() => {
         setMessage(null)
       }, 4000)
-
     }
   }
 
   const handleLogout = async (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedBlogappUser')
-    // eslint-disable-next-line no-restricted-globals
     location.reload()
   }
 
@@ -68,7 +68,6 @@ const App = () => {
       url: newBlogUrl,
       likes: 0,
       user: user.id
-
     }
 
     blogService
@@ -99,82 +98,50 @@ const App = () => {
     setNewBlogAuthor(event.target.value)
   }
 
-  const loginForm = () => (
-    <>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </>   
-  )
-
-  const blogForm = () => (
-    <div>
-      <h2>Blogs</h2>
-      <h3>{user.name} is logged in</h3>
-      <form onSubmit={addBlog}>
-        <div>
-          <>title: </>
-          <input
-            value={newBlogTitle}
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div>
-          <>author: </>
-          <input
-            value={newBlogAuthor}
-            onChange={handleAuthorChange}
-          />
-        </div>
-        
-        <div>
-          <>url:  </>
-          <input
-            value={newBlogUrl}
-            onChange={handleUrlChange}
-          />
-        </div><button type="submit">create</button>
-      </form> 
-      <button onClick={handleLogout}>logout</button> 
-
-<div>
--------------------------------------------------------------
-</div>
-
-      <div>
-      {blogs.map(blog => 
-          <Blog
-            key={blog.id}
-            blog={blog}/>
-          )}
-      </div>
-    </div>
-  )
-
+  if(user === null)
   return (
     <div>
       <Notification message={message}/>
-      {user === null && loginForm()}
-      {user !== null && blogForm()}
+      <LoginForm 
+        handleLogin={handleLogin}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      />
+    </div>
+  )
+
+  
+
+  const sortBlogs = (blog1, blog2) => {
+    return -(blog1.likes - blog2.likes)
+  }
+
+  return (
+    <div>
+      <Notification message={message}/> 
+      <h2>Blogs</h2>
+      <h3>{user.name} is logged in</h3>
+        <NewBlogForm
+          user={user}
+          addBlog={addBlog}
+          newBlogTitle={newBlogTitle}
+          newBlogUrl={newBlogUrl}
+          newBlogAuthor={newBlogAuthor}
+          handleTitleChange={handleTitleChange}
+          handleUrlChange={handleUrlChange}
+          handleAuthorChange={handleAuthorChange}
+        />
+        <button onClick={handleLogout}>logout</button>
+      <div>
+        {blogs.sort(sortBlogs).map(blog => 
+          <Blog
+          key={blog.id}
+          blog={blog}
+          user={user}/>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 
@@ -24,9 +23,15 @@ const create = async newObject => {
 }
 
 const update = async (id, newObject) => {
-  const request = axios.put(`${ baseUrl } /${id}`, newObject)
-  const response = await request
+  const request = await axios.put(`${ baseUrl }/${id}`, newObject)
+  const response = request
   return response.data
 }
 
-export default { getAll, create, update, setToken } 
+const remove = async (id, removeableBlog) => {
+  console.log(`${ baseUrl }/${id}`)
+  const response = await axios.delete(`${ baseUrl }/${id}`, removeableBlog)
+  return response.data
+}
+
+export default { getAll, create, update, setToken, remove }
