@@ -25,13 +25,14 @@ const NewBlogForm = ({
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={() => setLoginVisible(true)}>create blog</button>
+        <button onClick={() => setLoginVisible(true)}>new blog</button>
       </div>
       <div style={showWhenVisible}>
         <form onSubmit={addBlog}>
           <div>
             <>title: </>
             <input
+              id='title'
               value={newBlogTitle}
               onChange={handleTitleChange}
             />
@@ -39,6 +40,7 @@ const NewBlogForm = ({
           <div>
             <>author: </>
             <input
+              id='author'
               value={newBlogAuthor}
               onChange={handleAuthorChange}
             />
@@ -46,10 +48,11 @@ const NewBlogForm = ({
           <div>
             <>url:  </>
             <input
+              id='url'
               value={newBlogUrl}
               onChange={handleUrlChange}
             />
-          </div><button type="submit">create</button>
+          </div><button id='create-button' type="submit">create</button>
         </form>
 
         <button onClick={() => setLoginVisible(false)}>cancel</button>

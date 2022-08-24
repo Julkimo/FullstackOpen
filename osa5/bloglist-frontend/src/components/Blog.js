@@ -44,7 +44,7 @@ const Blog = ({ blog }) => {
     <li className='blog'>
       <div style={hideWhenVisible}>
         {blog.title} by {blog.author}
-        <button onClick={() => setLoginVisible(true)}>view</button>
+        <button id='view-button' onClick={() => setLoginVisible(true)}>view</button>
       </div>
       <div style={showWhenVisible} className='title'>
         <div>
@@ -57,7 +57,7 @@ const Blog = ({ blog }) => {
         </div>
         <div className='likes'>
             Likes: {likes}
-          <button onClick={handleLike}> like </button>
+          <button id='like-button' onClick={handleLike}> like </button>
         </div>
         <div>
             OP: {blog.user.name}

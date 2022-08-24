@@ -15,6 +15,11 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState('')
+  
+  // Tyhjentää tiedot poistuessa
+  window.addEventListener('beforeunload', function(){
+    window.localStorage.removeItem('loggedBlogappUser')
+  }, false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
