@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogServices from '../services/blogs'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog }) => {
 
   const [loginVisible, setLoginVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
@@ -19,7 +19,6 @@ const Blog = ({ blog, user }) => {
       title: blog.title,
       url: blog.url
     }
-
     await blogServices.update(blog.id, blogObject)
   }
 
@@ -32,8 +31,6 @@ const Blog = ({ blog, user }) => {
   }
 
   const DeleteButton = () => {
-    // eslint-disable-next-line eqeqeq
-    if(user.name === blog.user.name) {
       return (
         <div>
           <button onClick={handleDelete}>
@@ -41,26 +38,24 @@ const Blog = ({ blog, user }) => {
           </button>
         </div>
       )
-    }
   }
 
-
   return(
-    <div>
+    <li className='blog'>
       <div style={hideWhenVisible}>
         {blog.title} by {blog.author}
         <button onClick={() => setLoginVisible(true)}>view</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='title'>
         <div>
           ::::::::::::::::::::::::::::::::::::
         </div>
         Title: {blog.title} *** {blog.author}
         <button onClick={() => setLoginVisible(false)}>hide</button>
-        <div>
+        <div className='url'>
             Url: {blog.url}
         </div>
-        <div>
+        <div className='likes'>
             Likes: {likes}
           <button onClick={handleLike}> like </button>
         </div>
@@ -72,7 +67,7 @@ const Blog = ({ blog, user }) => {
         ::::::::::::::::::::::::::::::::::::
         </div>
       </div>
-    </div>
+    </li>
   )
 }
 

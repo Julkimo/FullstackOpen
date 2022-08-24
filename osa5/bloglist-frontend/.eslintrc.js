@@ -19,14 +19,8 @@ module.exports = {
         "react", "jest"
     ],
     "rules": {
-        "indent": [
-            "error",
-            2  
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "indent": 0,
+        "linebreak-style": 0,
         "quotes": [
             "error",
             "single"
@@ -36,7 +30,7 @@ module.exports = {
             "never"
         ],
         "eqeqeq": "error",
-        "no-trailing-spaces": "error",
+        "no-trailing-spaces": 0,
         "object-curly-spacing": [
             "error", "always"
         ],
