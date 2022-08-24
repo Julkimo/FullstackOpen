@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFuc2t1IiwiaWQiOiI2MmZmNjQ0MjAxYWM0ODI1YTEyZTNiMjEiLCJpYXQiOjE2NjA5MDUyNjl9.2X5rbIGQrNTqHCI44Avax4ajjWcqQzaQCxSnWa7f57c
+
+{
+  "title": "Pitkien nimien etu",
+  "author": "Laura Jenna Ellinoora Alexandra Camilla Jurvanen",
+  "url": "www.kerrostalonjutu.com",
+  "likes": 51,
+  "userId": "62fcc3a6bef9b15c992d9fd8"
+}
